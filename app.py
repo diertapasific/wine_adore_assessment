@@ -91,7 +91,8 @@ st.plotly_chart(fig_prod, use_container_width=True)
 # --- Channel Usage ---
 st.subheader("🛒 Sales Channel Performance")
 
-channel_df = insights["channel_usage"].reset_index().rename(
+# Exclude 'NumWebVisitsMonth' since it's engagement, not actual purchases
+channel_df = insights["channel_usage"].drop(index="NumWebVisitsMonth").reset_index().rename(
     columns={"index": "Channel", "Avg": "Average"}
 )
 
@@ -104,7 +105,6 @@ channel_map = {
     "WebPurchases": "Web Purchases",
     "CatalogPurchases": "Catalog Purchases",
     "StorePurchases": "Store Purchases",
-    "WebVisitsMonth": "Web Visits / Month",
 }
 
 channel_df["Channel"] = channel_df["Channel"].map(channel_map)
